@@ -1,4 +1,4 @@
-/** EzLand.js | v 1.0.0 - simple small lib for page-render by JS components 
+/** EzLand.js | v 1.0.1 - simple small lib for page-render by JS components 
  * Creator: Hrynchyk Dzmitryi
 */
 class EzHTMLElement extends HTMLElement {
@@ -95,6 +95,7 @@ $ez = (function() {
         imports: {},
         lazyImports: {},
         deferImports: [],
+        deferConfigs: {},
         linksLoaded: 0,
         renderedComponentsNumber: 0,
         fetchedScripts: {},
@@ -127,9 +128,16 @@ $ez = (function() {
                 delete this.fetchedScripts[elTag];
             }
         },
-        import: function(elConfig) {
+        importSeparate: function(elConfig) {
             elConfig.define = elConfig.define.toLowerCase();
             this.imports[elConfig.define] = elConfig;
+        },
+        import: function(elConfig) {
+            if (Array.isArray(elConfig)) {
+                elConfig.forEach(this.importSeparate.bind(this));
+                return;
+            }
+            this.importSeparate(elConfig);
         },
         extendClass: function(classObject) {
             classObject.prototype.$attr = (context, attributeCode) => {
@@ -168,8 +176,10 @@ $ez = (function() {
                 }
             });
         },
-        registerDefer: function(element) {
+        registerDefer: function(element, el) {
             this.deferImports.push(element);
+            if (this.deferConfigs[el.define]) return;
+            this.deferConfigs[el.define] = el;
         },
         bindComponentClass: function(el, elClassName) {
             const extendedClass = this.extendClass($ez.links[elClassName]);
@@ -197,16 +207,18 @@ $ez = (function() {
                 this.renderComponent(el);
             }
         },
-        initSingleComponent: function(element) {
-            const el = this.imports[element.tagName.toLowerCase()];
-            if (!el) return; 
+        initSingleComponent: function(element, isAfterDefer) {
+            const tagName = element.tagName.toLowerCase();
+            let el = this.imports[tagName];
+            if (!el && !isAfterDefer) return;
+            el = el || this.deferConfigs[tagName];
             el.loading = element.getAttribute('loading');
             if (el.loading === 'lazy') {
                 this.registerLazyload(element);
                 return;
             }
             if (el.loading === 'defer') {
-                this.registerDefer(element);
+                this.registerDefer(element, el);
                 return;
             }
             this.handleScriptFetch(el);
@@ -279,7 +291,7 @@ $ez = (function() {
         afterRender: function() {
             this.deferImports = this.deferImports.filter(element => {
                 element.setAttribute('loading', 'lazy');
-                this.initSingleComponent(element);
+                this.initSingleComponent(element, true);
                 return false;
             });
             this.$afterMethods = this.$afterMethods.filter(callback => {
