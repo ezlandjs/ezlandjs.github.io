@@ -1,16 +1,39 @@
+:root {
+    --bg-white: #f5f5f5;
+    --theme-color: #42975d;
+    --fetch-color: #aaaaaa33;
+}
+
 body {
     margin: 0;
     font-family: 'Tahoma', sans-serif;
+    background-color: var(--bg-white);
 }
 h1,h2 { margin: 0 0 0.25rem; }
+ul { list-style-type: none; padding: 0; margin: 0; }
 
-tv-demo:not([ez-binded]),
-ez-alpine-demo:not([ez-binded])
-{
-    overflow: hidden; display: flex; align-items: center; justify-content: center;
+header {
+    height: 40px; display: flex; align-items: center; background-color: var(--theme-color);
+}
+header nav a { 
+    text-decoration: none; font-weight: bold; transition: 0.3s; color: var(--bg-white); 
+    padding: 0.5rem;
 }
 
+/** Styles for reducing Cumulative Layout Shift (CLS) */
+ez-demo:not([ez-binded]),
+ez-alpine-demo:not([ez-binded]),
+ez-defer-demo:not([ez-binded])
+{ 
+    overflow: hidden; display: flex; align-items: center; background-color: var(--fetch-color); 
+    cursor: wait; border-radius: 1rem;
+}
+ez-demo { min-height: 62px; align-items: start; }
+ez-alpine-demo { min-height: 290px; }
+ez-defer-demo { min-height: 121px; }
+
 .container {
-    display: flex; gap: 1rem; flex-direction: column;
-    max-width: 600px; margin: 0 auto;
+    display: flex; gap: 2rem; flex-direction: column;
+    background-color: #fff; min-height: 100vh; min-height: 100dvh;
+    max-width: 600px; margin: 0 auto; padding: 0.5rem 1rem; box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
