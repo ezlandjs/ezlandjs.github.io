@@ -12,7 +12,7 @@
             "    ELEMENT_ATTRIBUTES = [{ 'x-bind' : 'eventListeners' }]",
             "",
             "    EZ_HTML = ($) => /*html*/`",
-            "        <div x-text=\"value\"></div>;",
+            "        <div x-text=\"value\"></div>",
             "        <ez-childs></ez-childs>",
             "    `",
             "",

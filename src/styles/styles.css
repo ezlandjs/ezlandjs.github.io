@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    font-family: 'Tahoma', sans-serif;
+}
+tv-demo:not([ez-binded]),
+ez-alpine-demo:not([ez-binded])
+{
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+}
+ez-demo, ez-alpine-demo {
+    display: block;
+}
+ez-demo { min-height: 50px; }
+ez-alpine-demo { min-height: 150px; }
