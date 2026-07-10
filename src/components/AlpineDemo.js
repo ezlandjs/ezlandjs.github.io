@@ -2,11 +2,14 @@ class AlpineDemo extends EzAlpineHTMLElement {
 
     ALPINE_COMPONENT_KEY = 'initAlpineDemoComponent';
 
-    BUTTONS = ['First', 'Second', 'Third'];
+    BUTTONS = ['First', 'Second', 'Defered loading'];
 
     renderButtonByArray(btnTitle, idx) {
+        let num = idx + 1;
         return /*html*/`
-            <button @click="showByIndex(${idx + 1})">Show ${btnTitle}</button>
+            <button @click="showByIndex(${num})"
+                x-text="(openIndex === ${num} ? 'Hide' : 'Show') + ' ${btnTitle}'"
+            ></button>
         `
     }
 
