@@ -1,0 +1,49 @@
+{
+	"EzLand.js + Alpine.js Component": {
+		"scope": "javascript",
+		"prefix": "ez.init.alpine",
+		"body": [
+			"class $1 extends EzAlpineHTMLElement {",
+            "",
+            "    ALPINE_COMPONENT_KEY = 'init$1Component';",
+            "",
+            "    DEPS = []; // exmple: [{ 'text/css' : 'web/css/scene.css' }]",
+            "",
+            "    ELEMENT_ATTRIBUTES = [{ 'x-bind' : 'eventListeners' }]",
+            "",
+            "    EZ_HTML = ($) => /*html*/`",
+            "        <div x-text=\"value\"></div>;",
+            "        <ez-childs></ez-childs>",
+            "    `",
+            "",
+            "    init$1Component($) {",
+            "        return {",
+            "            value: 'Test value',",
+            "            init() {",
+            "                this.value = $(this.\\$el, 'title'); // Get attribute of html element",
+            "            }",
+            "            eventListeners: {",
+            "               ['@android-accelerometer.window'](e) {}",
+            "            }",
+            "        }",
+            "    }",
+            "",
+            "    connectedCallback() {",
+            "        super.connectedCallback();",
+            "        // Methods called after component binding",
+            "    }",
+			"}",
+            "\\$ez.setComponent($1);",
+			"$2"
+		],
+		"description": "Add EzLand.js + Alpine.js component"
+	},
+    "EzLand.js import sample into App config": {
+		"scope": "javascript,html",
+		"prefix": "ez.import",
+		"body": [
+			"\\$ez.import({ define: 'ez-$1', file: 'web/js/components/content/$2'});"
+		],
+		"description": "Import link for EzLand.js component"
+	}
+}
