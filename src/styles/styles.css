@@ -2,13 +2,15 @@ body {
     margin: 0;
     font-family: 'Tahoma', sans-serif;
 }
+h1 { margin: 0 0 0.25rem; }
+
 tv-demo:not([ez-binded]),
 ez-alpine-demo:not([ez-binded])
 {
     overflow: hidden; display: flex; align-items: center; justify-content: center;
 }
-ez-demo, ez-alpine-demo {
-    display: block;
+
+.container {
+    display: flex; gap: 1rem; flex-direction: column;
+    max-width: 600px; margin: 0 auto;
 }
-ez-demo { min-height: 50px; }
-ez-alpine-demo { min-height: 150px; }

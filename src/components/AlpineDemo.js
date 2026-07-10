@@ -2,9 +2,16 @@ class AlpineDemo extends EzAlpineHTMLElement {
 
     ALPINE_COMPONENT_KEY = 'initAlpineDemoComponent';
 
-    renderByArray(btnTitle, idx) {
+    BUTTONS = ['First', 'Second', 'Third'];
+
+    renderButtonByArray(btnTitle, idx) {
         return /*html*/`
-            <button @click="openIndex = (${idx + 1})">${btnTitle}</button>
+            <button @click="showByIndex(${idx + 1})">Show ${btnTitle}</button>
+        `
+    }
+
+    renderDropdownByArray(btnTitle, idx) {
+        return /*html*/`
             <div x-show="openIndex === ${idx + 1}">
                 <ez-child-${idx}></ez-child-${idx}>
             </div>
@@ -12,12 +19,18 @@ class AlpineDemo extends EzAlpineHTMLElement {
     }
 
     EZ_HTML = ($) => /*html*/`
-        ${['Open first', 'Open second', 'Open third'].map(this.renderByArray).join('')}
+        <div>
+            ${this.BUTTONS.map(this.renderButtonByArray).join('')}
+        </div>
+        ${this.BUTTONS.map(this.renderDropdownByArray).join('')}
     `
 
     initAlpineDemoComponent($) {
         return {
-            openIndex: 0
+            openIndex: 0,
+            showByIndex(idx) {
+                this.openIndex = this.openIndex === idx ? 0 : idx;
+            }
         }
     }
 

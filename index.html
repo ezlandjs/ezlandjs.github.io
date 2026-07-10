@@ -11,11 +11,21 @@
         <script defer src="/src/lib/alpine.js"></script>
     </head>
     <body>
-        <ez-demo title="Demo title"></ez-demo>
-        <ez-alpine-demo>
-            <ez-demo title="First demo component" loading="defer"></ez-demo>
-            <ez-demo title="Second demo component" loading="defer"></ez-demo>
-            <ez-demo title="Third demo component" loading="defer"></ez-demo>
-        </ez-alpine-demo>
+        <div class="container">
+            <!-- All attributes will be available inside the component. -->
+            <ez-demo subtitle="EzLand.js Demo">
+                <h1>Welcome</h1>
+            </ez-demo>
+
+            <!--
+                Use the `loading="defer"` attribute so that the element loads only when it appears 
+                on the screen as a result of an external component's actions.
+            -->
+            <ez-alpine-demo>
+                <ez-demo subtitle="First demo component" loading="defer"></ez-demo>
+                <ez-demo subtitle="Second demo component" loading="defer"></ez-demo>
+                <ez-demo subtitle="Third demo component" loading="defer"></ez-demo>
+            </ez-alpine-demo>
+        </div>
     </body>
 </html>

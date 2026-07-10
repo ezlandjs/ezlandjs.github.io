@@ -1,13 +1,11 @@
 class SimpleDemo extends EzHTMLElement {
-
-    EZ_HTML = ({title}) => /*html*/`
-        <div>${title}</div>
+    /**
+     * <ez-childs></ez-childs> - it's default EzLand.js element
+     * Use this tag to pass other elements into the current component.
+    */
+    EZ_HTML = ({subtitle}) => /*html*/`
         <ez-childs></ez-childs>
+        <div>${subtitle}</div>
     `
-
-    connectedCallback() {
-        super.connectedCallback();
-        // Methods called after component binding
-    }
 }
 $ez.setComponent(SimpleDemo);
