@@ -21,7 +21,7 @@
             "            value: 'Test value',",
             "            init() {",
             "                this.value = $(this.\\$el, 'title'); // Get attribute of html element",
-            "            }",
+            "            },",
             "            eventListeners: {",
             "               ['@android-accelerometer.window'](e) {}",
             "            }",
