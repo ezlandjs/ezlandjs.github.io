@@ -12,23 +12,25 @@
     </head>
     <body>
         <header>
-            <ez-header></ez-header>
+            <ez-header role="navigation"></ez-header>
         </header>
-        <div class="container">
-            <!-- All attributes will be available inside the component. -->
-            <ez-demo subtitle="EzLand.js Demo">
-                <h1>Welcome</h1>
-            </ez-demo>
+        <main>
+            <div class="container">
+                <!-- All attributes will be available inside the component. -->
+                <ez-demo subtitle="EzLand.js Demo">
+                    <h1>Welcome</h1>
+                </ez-demo>
 
-            <!--
-                Use the `loading="defer"` attribute so that the element loads only when it appears 
-                on the screen as a result of an external component's actions.
-            -->
-            <ez-alpine-demo>
-                <ez-demo subtitle="First demo component" loading="defer"></ez-demo>
-                <ez-demo subtitle="Second demo component" loading="defer"></ez-demo>
-                <ez-defer-demo loading="defer"></ez-defer-demo>
-            </ez-alpine-demo>
-        </div>
+                <!--
+                    Use the `loading="defer"` attribute so that the element loads only when it appears 
+                    on the screen as a result of an external component's actions.
+                -->
+                <ez-alpine-demo>
+                    <ez-demo subtitle="First demo component" loading="defer"></ez-demo>
+                    <ez-demo subtitle="Second demo component" loading="defer"></ez-demo>
+                    <ez-defer-demo loading="defer"></ez-defer-demo>
+                </ez-alpine-demo>
+            </div>
+        </main>
     </body>
 </html>
