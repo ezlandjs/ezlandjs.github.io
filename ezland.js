@@ -1,4 +1,4 @@
-/** EzLand.js | v 1.0.2 - simple small lib for page-render by JS components 
+/** EzLand.js | v 1.0.3 - simple small lib for page-render by JS components 
  * Creator: Hrynchyk Dzmitryi
 */
 class EzHTMLElement extends HTMLElement {
@@ -18,7 +18,7 @@ class EzHTMLElement extends HTMLElement {
                 checkIdxContainer.replaceWith(child);
             });
             return;
-        };
+        }
         container.replaceWith(...legacy);
     }
     connectedCallback() {
@@ -71,7 +71,7 @@ class EzAlpineHTMLElement extends EzHTMLElement {
                         window.fetchedEzDepsScripts[srcId] = true;
                         this.DEPS_LOADED++;
                         this.bindAlpineComponent();
-                    };
+                    }
                 }
                 if (!element) return;
                 element.id = srcId;
@@ -230,14 +230,15 @@ $ez = (function() {
         },
         handleDOMObserver: function() {
             if (this.domObserver) return;
+            const handleElement = (element, arr) => {
+                let tagName = element.tagName.toLowerCase();
+                if (!this.imports[tagName]) return;
+                arr.push({ tag: tagName, element: element});
+            }
             const prepareElementForMutaion = (targetNode, arr, query, mutation) => {
                 let uninitedElements = targetNode.querySelectorAll(query);
-                uninitedElements.forEach(element => {
-                    let tagName = element.tagName.toLowerCase();
-                    if (!this.imports[tagName]) return;
-                    arr.push({ tag: tagName, element: element});
-                });
-            };
+                uninitedElements.forEach(element => handleElement(element, arr));
+            }
             this.domObserver = new MutationObserver((mutationsList) => {
                 let query = Object.keys(this.imports).join(',');
                 if (!query) return;
@@ -252,9 +253,13 @@ $ez = (function() {
                         continue;
                     }
                     mutation.addedNodes.forEach(addedNode => {
-                        if (!addedNode.querySelectorAll 
-                            || (addedNode.previousSibling && addedNode.previousSibling.nodeName !== 'TEMPLATE')
-                        ) return;
+                        const isSkipping = addedNode.previousSibling 
+                            && addedNode.previousSibling.nodeName !== 'TEMPLATE';
+                        if (!addedNode.querySelectorAll || isSkipping) return;
+                        if (addedNode.getAttribute('ez-simple') || this.allTags.includes(addedNode.tagName)) {
+                            handleElement(addedNode, elementsForNodeMutation);
+                            return;
+                        }
                         prepareElementForMutaion(addedNode, elementsForNodeMutation, query, mutation);
                     });
                 }
@@ -301,7 +306,7 @@ $ez = (function() {
             });
             if (!this.domObserver) {
                 this.handleDOMObserver();
-            };
+            }
             this.handleInteraction();
         },
         handleInteraction: function (){
