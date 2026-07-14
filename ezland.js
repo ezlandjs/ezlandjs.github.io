@@ -308,6 +308,7 @@ $ez = (function() {
                 this.handleDOMObserver();
             }
             this.handleInteraction();
+            document.body.setAttribute('ez-inited', 1);
         },
         handleInteraction: function (){
             const eventsArray = ['wheel', 'touchstart', 'scroll', 'keydown', 'mouseover'];

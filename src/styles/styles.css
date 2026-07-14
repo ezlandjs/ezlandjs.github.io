@@ -9,6 +9,12 @@ body {
     font-family: 'Tahoma', sans-serif;
     background-color: var(--bg-white);
 }
+/** START: Reducing browser page re-redner flickering after ezland initialization  
+    To avoid page flickering when switching between pages, we need to make the default elements invisible.
+*/
+body:not([ez-inited="1"]) main div,
+body:not([ez-inited="1"]) main h1 { display:none; }
+/** END */
 h1,h2 { margin: 0 0 0.25rem; }
 ul { list-style-type: none; padding: 0; margin: 0; }
 
