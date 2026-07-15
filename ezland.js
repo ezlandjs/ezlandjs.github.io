@@ -1,4 +1,4 @@
-/** EzLand.js | v 1.0.3 - simple small lib for page-render by JS components 
+/** EzLand.js | v 1.0.4 - simple small lib for page-render by JS components 
  * Creator: Hrynchyk Dzmitryi
 */
 class EzHTMLElement extends HTMLElement {
@@ -102,7 +102,7 @@ $ez = (function() {
         $interactMethods: [],
 
         startPending: (() => {
-            window.addEventListener('load', () => {
+            window.addEventListener('DOMContentLoaded', () => {
                 $ez.initEz();
             });
         })(),
