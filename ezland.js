@@ -21,9 +21,14 @@ class EzHTMLElement extends HTMLElement {
         }
         container.replaceWith(...legacy);
     }
+    _postHtmlBind() {
+        if (!this.getAttribute($ez.complexComponentCode) || !$ez.registeredTags) return;
+        this.querySelectorAll($ez.registeredTags).forEach(element => $ez.initSingleComponent(element));
+    }
     connectedCallback() {
         if (this.getAttribute('loading')) return;
         this._bindHtml();
+        this._postHtmlBind();
         this.setAttribute('ez-binded', 1);
         this.ELEMENT_ATTRIBUTES.forEach(attrConf => {
             for (let keyCode in attrConf) {
@@ -88,6 +93,8 @@ $ez = (function() {
         config: {
             waitForEveryone: false
         },
+        simpleComponentCode: 'ez-simple',
+        complexComponentCode: 'ez-complex',
         registeredTags: '',
         registeredTagsStrict: {},
         allTags: [],
@@ -245,7 +252,7 @@ $ez = (function() {
                 const elementsForNodeMutation = [];
                 for (let mutation of mutationsList) {
                     if (mutation.type !== 'childList' 
-                        || mutation.target.getAttribute('ez-simple') 
+                        || mutation.target.getAttribute(this.simpleComponentCode) 
                         || !mutation.addedNodes.length
                     ) continue;
                     if (this.allTags.includes(mutation.target.tagName)) {
@@ -256,7 +263,9 @@ $ez = (function() {
                         const isSkipping = addedNode.previousSibling 
                             && addedNode.previousSibling.nodeName !== 'TEMPLATE';
                         if (!addedNode.querySelectorAll || isSkipping) return;
-                        if (addedNode.getAttribute('ez-simple') || this.allTags.includes(addedNode.tagName)) {
+                        if (addedNode.getAttribute(this.simpleComponentCode) 
+                            || this.allTags.includes(addedNode.tagName)
+                        ) {
                             handleElement(addedNode, elementsForNodeMutation);
                             return;
                         }
